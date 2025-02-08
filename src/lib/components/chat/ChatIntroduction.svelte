@@ -8,6 +8,7 @@
 	import ModelCardMetadata from "../ModelCardMetadata.svelte";
 	import { base } from "$app/paths";
 	import JSON5 from "json5";
+	import i18n from "$lib/i18n";
 
 	interface Props {
 		currentModel: Model;
@@ -35,8 +36,7 @@
 				</div>
 			</div>
 			<p class="text-base text-gray-600 dark:text-gray-400">
-				{envPublic.PUBLIC_APP_DESCRIPTION ||
-					"Making the community's best AI chat models available to everyone."}
+				{envPublic.PUBLIC_APP_DESCRIPTION || $i18n.t('chat.introduction.default_description')}
 			</p>
 		</div>
 	</div>
@@ -53,7 +53,7 @@
 		<div class="overflow-hidden rounded-xl border dark:border-gray-800">
 			<div class="flex p-3">
 				<div>
-					<div class="text-sm text-gray-600 dark:text-gray-400">Current Model</div>
+					<div class="text-sm text-gray-600 dark:text-gray-400">{$i18n.t('chat.introduction.current_model')}</div>
 					<div class="flex items-center gap-1.5 font-semibold max-sm:text-smd">
 						{#if currentModel.logoUrl}
 							<img
@@ -81,7 +81,7 @@
 	</div>
 	{#if currentModel.promptExamples}
 		<div class="lg:col-span-3 lg:mt-6">
-			<p class="mb-3 text-gray-600 dark:text-gray-300">Examples</p>
+			<p class="mb-3 text-gray-600 dark:text-gray-300">{$i18n.t('chat.introduction.examples')}</p>
 			<div class="grid gap-3 lg:grid-cols-3 lg:gap-5">
 				{#each currentModel.promptExamples as example}
 					<button

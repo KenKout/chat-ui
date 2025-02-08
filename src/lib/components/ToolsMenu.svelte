@@ -62,7 +62,7 @@
 	cursor-pointer select-none items-center gap-1 rounded-lg border bg-white px-2 py-1.5 shadow-sm hover:shadow-none dark:border-gray-800 dark:bg-gray-900"
 	>
 		<IconTool classNames="dark:text-purple-600" />
-		Tools
+		{$i18n.t('menu.tools')}
 		<span class="text-gray-400 dark:text-gray-500"> ({activeToolCount}) </span>
 	</summary>
 	<div
@@ -70,7 +70,7 @@
 	>
 		<div class="grid grid-cols-2 gap-x-6 gap-y-1 p-3">
 			<div class="col-span-2 flex items-center gap-1.5 text-sm text-gray-500">
-				Available tools
+				{$i18n.t('menu.available_tools')}
 				{#if isHuggingChat}
 					<a
 						href="https://huggingface.co/spaces/huggingchat/chat-ui/discussions/470"

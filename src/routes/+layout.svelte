@@ -9,6 +9,8 @@
 	import { page } from "$app/stores";
 
 	import { env as envPublic } from "$env/dynamic/public";
+	import { initI18n } from "$lib/i18n";
+	import i18n from "$lib/i18n";
 
 	import { error } from "$lib/stores/errors";
 	import { createSettingsStore } from "$lib/stores/settings";
@@ -123,6 +125,14 @@
 	const settings = createSettingsStore(data.settings);
 
 	onMount(async () => {
+		// Initialize i18n first
+		initI18n();
+		if (!localStorage.locale) {
+			const browserLang = navigator.language || 'en-US';
+			$i18n.changeLanguage(browserLang);
+		}
+
+		// Handle URL parameters
 		if ($page.url.searchParams.has("model")) {
 			await settings
 				.instantSet({

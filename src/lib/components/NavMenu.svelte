@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { base } from "$app/paths";
-
 	import Logo from "$lib/components/icons/Logo.svelte";
 	import { switchTheme } from "$lib/switchTheme";
 	import { isAborted } from "$lib/stores/isAborted";
@@ -13,6 +12,7 @@
 	import InfiniteScroll from "./InfiniteScroll.svelte";
 	import type { Conversation } from "$lib/types/Conversation";
 	import { CONV_NUM_PER_PAGE } from "$lib/constants/pagination";
+	import i18n from "$lib/i18n";
 
 	interface Props {
 		conversations: ConvSidebar[];
@@ -46,12 +46,12 @@
 		older: conversations.filter(({ updatedAt }) => updatedAt.getTime() < dateRanges[2]),
 	});
 
-	const titles: { [key: string]: string } = {
-		today: "Today",
-		week: "This week",
-		month: "This month",
-		older: "Older",
-	} as const;
+	const titles = {
+		today: $i18n.t('menu.time_range.today'),
+		week: $i18n.t('menu.time_range.this_week'),
+		month: $i18n.t('menu.time_range.this_month'),
+		older: $i18n.t('menu.time_range.older'),
+	};
 
 	const nModels: number = $page.data.models.filter((el: Model) => !el.unlisted).length;
 
@@ -99,7 +99,7 @@
 			onclick={handleNewChatClick}
 			class="flex rounded-lg border bg-white px-2 py-0.5 text-center shadow-sm hover:shadow-none dark:border-gray-600 dark:bg-gray-700 sm:text-smd"
 		>
-			New Chat
+			{$i18n.t('button.new_chat')}
 		</a>
 	{/if}
 </div>
@@ -153,7 +153,7 @@
 					type="submit"
 					class="ml-auto h-6 flex-none items-center gap-1.5 rounded-md border bg-white px-2 text-gray-700 shadow-sm group-hover:flex hover:shadow-none dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400 dark:hover:text-gray-300 md:hidden"
 				>
-					Sign Out
+					{$i18n.t('button.sign_out')}
 				</button>
 			{/if}
 		</form>
@@ -164,7 +164,7 @@
 				type="submit"
 				class="flex h-9 w-full flex-none items-center gap-1.5 rounded-lg pl-2.5 pr-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
 			>
-				Login
+				{$i18n.t('login')}
 			</button>
 		</form>
 	{/if}
@@ -173,14 +173,14 @@
 		type="button"
 		class="flex h-9 flex-none items-center gap-1.5 rounded-lg pl-2.5 pr-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
 	>
-		Theme
+		{$i18n.t('menu.theme')}
 	</button>
 	{#if nModels > 1}
 		<a
 			href="{base}/models"
 			class="flex h-9 flex-none items-center gap-1.5 rounded-lg pl-2.5 pr-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
 		>
-			Models
+			{$i18n.t('menu.models')}
 			<span
 				class="ml-auto rounded-full border border-gray-300 px-2 py-0.5 text-xs text-gray-500 dark:border-gray-500 dark:text-gray-400"
 				>{nModels}</span
@@ -192,7 +192,7 @@
 			href="{base}/assistants"
 			class="flex h-9 flex-none items-center gap-1.5 rounded-lg pl-2.5 pr-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
 		>
-			Assistants
+			{$i18n.t('menu.assistants')}
 		</a>
 	{/if}
 	{#if $page.data.enableCommunityTools}
@@ -200,10 +200,10 @@
 			href="{base}/tools"
 			class="flex h-9 flex-none items-center gap-1.5 rounded-lg pl-2.5 pr-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
 		>
-			Tools
+			{$i18n.t('menu.tools')}
 			<span
 				class="ml-auto rounded-full border border-purple-300 px-2 py-0.5 text-xs text-purple-500 dark:border-purple-500 dark:text-purple-400"
-				>New</span
+				>{$i18n.t('announcement.new')}</span
 			>
 		</a>
 	{/if}
@@ -212,14 +212,14 @@
 		href="{base}/settings"
 		class="flex h-9 flex-none items-center gap-1.5 rounded-lg pl-2.5 pr-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
 	>
-		Settings
+		{$i18n.t('menu.settings')}
 	</a>
 	{#if envPublic.PUBLIC_APP_NAME === "HuggingChat"}
 		<a
 			href="{base}/privacy"
 			class="flex h-9 flex-none items-center gap-1.5 rounded-lg pl-2.5 pr-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
 		>
-			About & Privacy
+			{$i18n.t('menu.about_privacy')}
 		</a>
 	{/if}
 </div>

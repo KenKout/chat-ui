@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CarbonContinue from "~icons/carbon/continue";
+	import i18n from "$lib/i18n";
 
 	interface Props {
 		classNames?: string;
@@ -14,5 +15,5 @@
 	onclick={onClick}
 	class="btn flex h-8 rounded-lg border bg-white px-3 py-1 text-gray-500 shadow-sm transition-all hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 {classNames}"
 >
-	<CarbonContinue class="mr-2 text-xs " /> Continue
+	<CarbonContinue class="mr-2 text-xs " /> {$i18n.t('button.continue')}
 </button>

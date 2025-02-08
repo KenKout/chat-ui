@@ -2,6 +2,7 @@
 	import { page } from "$app/state";
 	import { base } from "$app/paths";
 	import { env as envPublic } from "$env/dynamic/public";
+	import i18n from "$lib/i18n";
 	import type { BackendModel } from "$lib/server/models";
 	import { useSettingsStore } from "$lib/stores/settings";
 	import CopyToClipBoardBtn from "$lib/components/CopyToClipBoardBtn.svelte";
@@ -55,7 +56,7 @@
 				class="flex items-center truncate underline underline-offset-2"
 			>
 				<CarbonArrowUpRight class="mr-1.5 shrink-0 text-xs " />
-				Model page
+				{$i18n.t('settings.model.page')}
 			</a>
 		{/if}
 
@@ -67,7 +68,7 @@
 				class="flex items-center truncate underline underline-offset-2"
 			>
 				<CarbonArrowUpRight class="mr-1.5 shrink-0 text-xs " />
-				Dataset page
+				{$i18n.t('settings.model.dataset')}
 			</a>
 		{/if}
 
@@ -79,7 +80,7 @@
 				rel="noreferrer"
 			>
 				<CarbonArrowUpRight class="mr-1.5 shrink-0 text-xs " />
-				Model website
+				{$i18n.t('settings.model.website')}
 			</a>
 		{/if}
 
@@ -91,7 +92,7 @@
 				class="flex items-center truncate underline underline-offset-2"
 			>
 				<CarbonCode class="mr-1.5 shrink-0 text-xs " />
-				API Playground
+				{$i18n.t('settings.model.api_playground')}
 			</a>
 		{/if}
 
@@ -100,7 +101,7 @@
 			classNames="!border-none !shadow-none !py-0 !px-1 !rounded-md"
 		>
 			<div class="flex items-center gap-1.5 hover:underline">
-				<CarbonLink />Copy direct link to model
+				<CarbonLink />{$i18n.t('settings.model.copy_link')}
 			</div>
 		</CopyToClipBoardBtn>
 	</div>
@@ -117,12 +118,12 @@
 		}}
 	>
 		<CarbonChat class="mr-1.5 text-sm" />
-		New chat
+		{$i18n.t('settings.model.new_chat')}
 	</button>
 
 	<div class="relative flex w-full flex-col gap-2">
 		<div class="flex w-full flex-row content-between">
-			<h3 class="mb-1.5 text-lg font-semibold text-gray-800">System Prompt</h3>
+			<h3 class="mb-1.5 text-lg font-semibold text-gray-800">{$i18n.t('settings.model.system_prompt')}</h3>
 			{#if hasCustomPreprompt}
 				<button
 					class="ml-auto underline decoration-gray-300 hover:decoration-gray-700"
@@ -131,12 +132,12 @@
 						$settings.customPrompts[page.params.model] = model.preprompt;
 					}}
 				>
-					Reset
+					{$i18n.t('settings.model.reset')}
 				</button>
 			{/if}
 		</div>
 		<textarea
-			aria-label="Custom system prompt"
+			aria-label={$i18n.t('settings.model.custom_prompt_aria')}
 			rows="10"
 			class="w-full resize-none rounded-md border-2 bg-gray-100 p-2"
 			bind:value={$settings.customPrompts[page.params.model]}

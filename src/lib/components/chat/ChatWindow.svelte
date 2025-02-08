@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { run, createBubbler } from "svelte/legacy";
+	import i18n from "$lib/i18n";
 
 	const bubble = createBubbler();
 	import type { Message, MessageFile } from "$lib/types/Message";
@@ -162,7 +163,7 @@
 	);
 
 	function onShare() {
-		if (!confirm("Are you sure you want to share this conversation? This cannot be undone.")) {
+		if (!confirm($i18n.t("chat.share_confirm"))) {
 			return;
 		}
 
@@ -397,13 +398,13 @@
 			</div>
 			<form
 				tabindex="-1"
-				aria-label={isFileUploadEnabled ? "file dropzone" : undefined}
+				aria-label={isFileUploadEnabled ? $i18n.t("chat.file_upload.dropzone") : undefined}
 				onsubmit={(e) => {
 					e.preventDefault();
 					handleSubmit();
 				}}
 				class="relative flex w-full max-w-4xl flex-1 items-center rounded-xl border bg-gray-100 dark:border-gray-600 dark:bg-gray-700
-            {isReadOnly ? 'opacity-30' : ''}"
+	            {isReadOnly ? 'opacity-30' : ''}"
 			>
 				{#if onDrag && isFileUploadEnabled}
 					<FileDropzone bind:files bind:onDrag mimeTypes={activeMimeTypes} />
@@ -413,11 +414,11 @@
 						class:paste-glow={pastedLongContent}
 					>
 						{#if lastIsError}
-							<ChatInput value="Sorry, something went wrong. Please try again." disabled={true} />
+							<ChatInput value={$i18n.t("chat.error_message")} disabled={true} />
 						{:else}
 							<ChatInput
 								{assistant}
-								placeholder={isReadOnly ? "This conversation is read-only." : "Ask anything"}
+								placeholder={isReadOnly ? $i18n.t("chat.read_only") : $i18n.t("chat.ask_anything")}
 								{loading}
 								bind:value={message}
 								bind:files
@@ -442,7 +443,7 @@
 								class="btn absolute bottom-2 right-2 size-7 self-end rounded-full border bg-white text-black shadow transition-none enabled:hover:bg-white enabled:hover:shadow-inner disabled:opacity-60 dark:border-gray-600 dark:bg-gray-900 dark:text-white dark:hover:enabled:bg-black"
 								disabled={!message || isReadOnly}
 								type="submit"
-								aria-label="Send message"
+								aria-label={$i18n.t("chat.file_upload.send_button")}
 								name="submit"
 							>
 								<svg
@@ -468,7 +469,7 @@
 				class="mt-2 flex justify-between self-stretch px-1 text-xs text-gray-400/90 max-md:mb-2 max-sm:gap-2"
 			>
 				<p>
-					Model:
+					{$i18n.t("chat.model_info")}:
 					{#if !assistant}
 						{#if models.find((m) => m.id === currentModel.id)}
 							<a
@@ -495,8 +496,7 @@
 							</span>
 						{/if}
 					{/if}
-					<span class="max-sm:hidden">·</span><br class="sm:hidden" /> Generated content may be inaccurate
-					or false.
+					<span class="max-sm:hidden">·</span><br class="sm:hidden" /> {$i18n.t("chat.generated_content_disclaimer")}
 				</p>
 				{#if messages.length}
 					<button
@@ -508,10 +508,10 @@
 					>
 						{#if isSharedRecently}
 							<CarbonCheckmark class="text-[.6rem] sm:mr-1.5 sm:text-green-600" />
-							<div class="text-green-600 max-sm:hidden">Link copied to clipboard</div>
+							<div class="text-green-600 max-sm:hidden">{$i18n.t("chat.link_copied")}</div>
 						{:else}
 							<CarbonExport class="sm:text-primary-500 text-[.6rem] sm:mr-1.5" />
-							<div class="max-sm:hidden">Share this conversation</div>
+							<div class="max-sm:hidden">{$i18n.t("chat.share_conversation")}</div>
 						{/if}
 					</button>
 				{/if}
